@@ -11,15 +11,14 @@ public class Game extends Canvas implements Runnable {
     private Thread thread;
     public boolean running = false;
     private Random r = new Random(); // this may be needded later for multiole enemies
-
+    public static long start = System.currentTimeMillis();
     private Handler handler;
-
     public Game() {
         handler = new Handler();
         this.addKeyListener(new KeyInput(handler));
 
         new Window(WIDTH, HEIGHT, "Generic Title", this);
-        Player x = new Player(WIDTH / 2 - 32, HEIGHT / 2 - 32, ID.Player);
+        Player x = new Player(WIDTH / 2 - 32, HEIGHT / 2 - 32, ID.Player, handler);
 //        BasicEnemy o = new BasicEnemy(WIDTH / 2 - 16, HEIGHT / 2 - 16, ID.BasicEnemy);
         handler.addObject(x);
         for(int i = 0; i < 10; i++){

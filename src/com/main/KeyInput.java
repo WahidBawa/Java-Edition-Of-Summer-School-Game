@@ -29,6 +29,7 @@ public class KeyInput extends KeyAdapter {
                     D = true;
                     i.setVelY(10);
                 }
+
                 if (key == KeyEvent.VK_RIGHT) {
                     R = true;
                     i.setVelX(10);
@@ -38,6 +39,9 @@ public class KeyInput extends KeyAdapter {
                     i.setVelX(-10);
                 }
             }
+        }
+        if (key == KeyEvent.VK_ESCAPE){
+            System.exit(1);
         }
     }
 
