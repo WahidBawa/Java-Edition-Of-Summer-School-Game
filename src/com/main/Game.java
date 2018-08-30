@@ -13,6 +13,7 @@ public class Game extends Canvas implements Runnable {
     private Random r = new Random(); // this may be needded later for multiole enemies
     public static long start = System.currentTimeMillis();
     private Handler handler;
+
     public Game() {
         handler = new Handler();
         this.addKeyListener(new KeyInput(handler));
@@ -21,8 +22,12 @@ public class Game extends Canvas implements Runnable {
         Player x = new Player(WIDTH / 2 - 32, HEIGHT / 2 - 32, ID.Player, handler);
 //        BasicEnemy o = new BasicEnemy(WIDTH / 2 - 16, HEIGHT / 2 - 16, ID.BasicEnemy);
         handler.addObject(x);
-        for(int i = 0; i < 10; i++){
+        int rnum = r.nextInt(10);
+        for(int i = 0; i < rnum; i++){
             handler.addObject(new BasicEnemy(r.nextInt(WIDTH), r.nextInt(100), ID.BasicEnemy));
+        }
+        for (int i = 0; i < 10 - rnum; i++){
+            handler.addObject(new RoundEnemy(r.nextInt(WIDTH), r.nextInt(100), ID.RoundEnemy));
         }
     }
 
