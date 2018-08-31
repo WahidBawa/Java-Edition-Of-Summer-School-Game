@@ -33,6 +33,6 @@ public class RoundEnemy extends GameObject {
 
     public void render(Graphics g) {
         g.setColor(colour);
-        g.drawOval(x, y, 16, 16);
+        g.fillOval(x, y, 16, 16);
     }
 }

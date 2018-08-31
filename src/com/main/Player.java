@@ -4,7 +4,13 @@ import java.awt.*;
 
 public class Player extends GameObject {
     Handler handler;
-    public static int Health = 100;
+    private static int Health = 100;
+    private boolean blink = false;
+    private long hitTime;
+    private Color[] bcols = {Color.white, Color.red};
+    private int dcol = 1;
+    private boolean checked = false;
+    private int oldX = 0;
     public Player(int x, int y, ID id, Handler handler) {
         super(x, y, id, 0);
         this.handler = handler;
@@ -23,31 +29,62 @@ public class Player extends GameObject {
         if (y > Game.HEIGHT - 64 || y < 0) {
             y += -velY;
         }
-        collision();
+        if (blink){
+            if (blinkTime(hitTime) >= 5){
+                blink = false;
+            }
+        }
+        if (collision() && !blink){
+            blink = true;
+            hitTime = System.currentTimeMillis();
+        }
+
     }
 
-    public void collision() {
+    private boolean collision() {
         for (GameObject i : handler.object) {
             if (i.getId() == ID.BasicEnemy || i.getId() == ID.RoundEnemy) {
-                if (getBounds().intersects(i.getBounds())) {
-                    updateHealth(10);
+                if (getBounds().intersects(i.getBounds()) && !blink) {
+                    updateHealth(i.getDmg());
                     if (Health <= 0){
                         long end = System.currentTimeMillis();
                         double time = (end - Game.start) / 1000f;
                         System.out.println("FINAL SCORE: " + Math.floor(time * 53));
                         System.exit(1);
                     }
+                    return true;
                 }
             }
         }
+        return false;
     }
     private void updateHealth(int damage){
         Health -= damage;
-        System.out.println(Health);
+        System.out.println("DAMAGE: " + damage);
+        System.out.println("Health: " + Health);
     }
     public void render(Graphics g) {
-        g.setColor(Color.white);
+        if (blink){
+            int X = (int) Math.floor(blinkTime(hitTime));
+            System.out.println(X);
+            if (X != oldX) checked = false;
+            if ((X % 1) == 0 && !checked){
+                oldX = X;
+                dcol *= -1;
+                checked = true;
+            }
+        }
+        if (dcol == 1){
+            g.setColor(bcols[1]);
+        }else{
+            g.setColor(bcols[0]);
+        }
         g.fillRect(x, y, 32, 32);
 
+    }
+    private long blinkTime(long hitTime){
+        long time = System.currentTimeMillis();
+        long timeDiff = (time - hitTime) / 1000;
+        return timeDiff;
     }
 }
