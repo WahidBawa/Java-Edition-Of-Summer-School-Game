@@ -34,7 +34,8 @@ public class Player extends GameObject {
                 blink = false;
             }
         }
-        if (collision() && !blink){
+//        if (collision() && !blink){
+        if (collision()){
             blink = true;
             hitTime = System.currentTimeMillis();
         }
@@ -46,7 +47,8 @@ public class Player extends GameObject {
             if (i.getId() == ID.BasicEnemy || i.getId() == ID.RoundEnemy) {
                 if (getBounds().intersects(i.getBounds()) && !blink) {
                     updateHealth(i.getDmg());
-                    if (Health <= 0){
+//                    if (Health <= 0){
+                    if (true){
                         long end = System.currentTimeMillis();
                         double time = (end - Game.start) / 1000f;
                         System.out.println("FINAL SCORE: " + Math.floor(time * 53));
