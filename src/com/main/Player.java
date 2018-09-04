@@ -30,7 +30,7 @@ public class Player extends GameObject {
             y += -velY;
         }
         if (blink){
-            if (blinkTime(hitTime) >= 5){
+            if (blinkTime(hitTime) >= 2){
                 blink = false;
             }
         }

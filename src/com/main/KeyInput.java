@@ -15,31 +15,41 @@ public class KeyInput extends KeyAdapter {
 
     public void keyPressed(KeyEvent e) {
         int key = e.getKeyCode();
-        for (GameObject i : handler.object) {
-            if (i.getId() == ID.Player) {
-                if (key == KeyEvent.VK_SPACE) {
-                    i.setX(0);
-                    i.setY(0);
-                }
-                if (key == KeyEvent.VK_UP) {
-                    U = true;
-                    i.setVelY(-10);
-                }
-                if (key == KeyEvent.VK_DOWN) {
-                    D = true;
-                    i.setVelY(10);
-                }
+        if (Game.gameState == Game.STATE.Game){
+            for (GameObject i : handler.object) {
+                if (i.getId() == ID.Player) {
+                    if (key == KeyEvent.VK_SPACE) {
+                        i.setX(0);
+                        i.setY(0);
+                    }
+                    if (key == KeyEvent.VK_UP) {
+                        U = true;
+                        i.setVelY(-10);
+                    }
+                    if (key == KeyEvent.VK_DOWN) {
+                        D = true;
+                        i.setVelY(10);
+                    }
 
-                if (key == KeyEvent.VK_RIGHT) {
-                    R = true;
-                    i.setVelX(10);
-                }
-                if (key == KeyEvent.VK_LEFT) {
-                    L = true;
-                    i.setVelX(-10);
+                    if (key == KeyEvent.VK_RIGHT) {
+                        R = true;
+                        i.setVelX(10);
+                    }
+                    if (key == KeyEvent.VK_LEFT) {
+                        L = true;
+                        i.setVelX(-10);
+                    }
                 }
             }
+        }else if (Game.gameState == Game.STATE.Menu){
+            System.out.println("Menu: " + key);
+            if (key == KeyEvent.VK_SPACE){
+                Game.gameState = Game.STATE.Game;
+                new Game();
+            }
         }
+
+
         if (key == KeyEvent.VK_ESCAPE){
             System.exit(1);
         }

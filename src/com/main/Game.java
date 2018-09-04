@@ -13,21 +13,27 @@ public class Game extends Canvas implements Runnable {
     private Random r = new Random(); // this may be needded later for multiole enemies
     public static long start = System.currentTimeMillis();
     private Handler handler;
+    public enum STATE{
+        Menu, Game
+    }
+
+    public static STATE gameState = STATE.Menu;
 
     public Game() {
         handler = new Handler();
         this.addKeyListener(new KeyInput(handler));
 
         new Window(WIDTH, HEIGHT, "Generic Title", this);
-        Player x = new Player(WIDTH / 2 - 32, HEIGHT / 2 - 32, ID.Player, handler);
-//        BasicEnemy o = new BasicEnemy(WIDTH / 2 - 16, HEIGHT / 2 - 16, ID.BasicEnemy);
-        handler.addObject(x);
-        int rnum = r.nextInt(10);
-        for(int i = 0; i < rnum; i++){
-            handler.addObject(new BasicEnemy(r.nextInt(WIDTH), r.nextInt(100), ID.BasicEnemy));
-        }
-        for (int i = 0; i < 10 - rnum; i++){
-            handler.addObject(new RoundEnemy(r.nextInt(WIDTH), r.nextInt(100), ID.RoundEnemy));
+        if (gameState == STATE.Game){
+            Player x = new Player(WIDTH / 2 - 32, HEIGHT / 2 - 32, ID.Player, handler);
+            handler.addObject(x);
+            int rnum = r.nextInt(10);
+            for(int i = 0; i < rnum; i++){
+                handler.addObject(new BasicEnemy(r.nextInt(WIDTH), r.nextInt(100), ID.BasicEnemy));
+            }
+            for (int i = 0; i < 10 - rnum; i++){
+                handler.addObject(new RoundEnemy(r.nextInt(WIDTH), r.nextInt(100), ID.RoundEnemy));
+            }
         }
     }
 
@@ -78,6 +84,9 @@ public class Game extends Canvas implements Runnable {
 
     private void tick() {
         handler.tick();
+        if (gameState == STATE.Game){
+
+        }
     }
 
     private void render() {
@@ -92,6 +101,13 @@ public class Game extends Canvas implements Runnable {
         g.fillRect(0, 0, WIDTH, HEIGHT);
 
         handler.render(g);
+
+        if (gameState == STATE.Game){
+
+        }else{
+            g.setColor(Color.MAGENTA);
+            g.drawString("What The Actual Fick", 100, 100);
+        }
 
         g.dispose();
         bs.show();

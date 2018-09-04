@@ -16,8 +16,8 @@ public class RoundEnemy extends GameObject {
 
     public RoundEnemy(int x, int y, ID id) {
         super(x, y, id, 5);
-        velX = r.nextInt(5) + 5;
-        velY = r.nextInt(5) + 5;
+        velX = r.nextInt(10) + 5;
+        velY = r.nextInt(10) + 5;
     }
 
     public void tick() {
